@@ -20,6 +20,8 @@ public class CacheCurrencyDataSource implements ICurrencyDataSource {
     }
 
     public void writingToTheDatabase(JSONObject jsonObject) {
+//        currencyDao.deleteCurrency();
+//        currencyDao.deleteDate();
         try {
             UpdateDate updateDate = new UpdateDate();
             updateDate.date = jsonObject.getString("Date");
