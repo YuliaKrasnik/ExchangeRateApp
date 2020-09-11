@@ -1,4 +1,4 @@
-package com.android.test.task.exchangerateapp.useCase;
+package com.android.test.task.exchangerateapp.useCase.common;
 
 public abstract class UseCase<RequestParametersType extends UseCase.IRequestValues,
         ResponseType extends UseCase.IResponseValues> {
