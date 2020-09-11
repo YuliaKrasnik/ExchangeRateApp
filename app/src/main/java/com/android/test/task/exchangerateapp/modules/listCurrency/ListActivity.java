@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.android.test.task.exchangerateapp.R;
+import com.android.test.task.exchangerateapp.useCase.common.UseCaseExecutor;
 
 public class ListActivity extends AppCompatActivity {
     IListModuleContract.IListView view;
@@ -28,6 +29,9 @@ public class ListActivity extends AppCompatActivity {
                     .commit();
         }
         view = (IListModuleContract.IListView) fragment;
+
+        final UseCaseExecutor useCaseExecutor = UseCaseExecutor.getInstance();
+        final IListModuleContract.IListPresenter presenter = new ListPresenter(view, useCaseExecutor);
 
     }
 }
