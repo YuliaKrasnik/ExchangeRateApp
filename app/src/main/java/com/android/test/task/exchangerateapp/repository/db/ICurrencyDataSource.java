@@ -8,7 +8,7 @@ public interface ICurrencyDataSource {
     void obtainCurrency(final IObtainCurrencyCallback callback);
 
     interface IObtainCurrencyCallback {
-        void didObtain(final List<Currency> news);
+        void didObtain(final List<Currency> currencies);
 
         void didFailObtain(final int errorStatusCode);
     }
