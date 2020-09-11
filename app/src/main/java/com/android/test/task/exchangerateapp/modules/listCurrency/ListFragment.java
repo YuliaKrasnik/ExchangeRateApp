@@ -1,14 +1,16 @@
 package com.android.test.task.exchangerateapp.modules.listCurrency;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,6 +19,7 @@ import com.android.test.task.exchangerateapp.R;
 import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListFragment extends Fragment implements IListModuleContract.IListView {
     private IListModuleContract.IListPresenter presenter;
@@ -39,6 +42,14 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
         recyclerView = view.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
+    //    recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
+        Drawable divider = ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.divider);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        if (divider != null) {
+            itemDecoration.setDrawable(divider);
+        }
+        recyclerView.addItemDecoration(itemDecoration);
 
         return view;
     }
