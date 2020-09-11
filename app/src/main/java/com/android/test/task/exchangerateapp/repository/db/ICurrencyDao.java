@@ -1,11 +1,14 @@
 package com.android.test.task.exchangerateapp.repository.db;
 
+import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 import com.android.test.task.exchangerateapp.model.modelDb.UpdateDate;
+
+import java.util.List;
 
 @Dao
 public interface ICurrencyDao {
@@ -20,4 +23,11 @@ public interface ICurrencyDao {
 
     @Query("DELETE FROM Currency")
     void deleteCurrency();
+
+    @Query("SELECT * FROM Currency LIMIT 1")
+    @Nullable
+    Currency getAnyCurrency();
+
+    @Query("SELECT * FROM Currency")
+    List<Currency> getCurrency();
 }

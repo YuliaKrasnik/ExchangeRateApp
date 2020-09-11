@@ -9,16 +9,28 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class CacheCurrencyDataSource implements ICurrencyDataSource {
     private AppDatabase db = App.getInstance().getDatabase();
     private ICurrencyDao currencyDao = db.currencyDao();
+    private List<Currency> currencyList = new ArrayList<>();
 
     @Override
     public void obtainCurrency(IObtainCurrencyCallback callback) {
-
+        currencyList = currencyDao.getCurrency();
+        callback.didObtain(currencyList);
     }
 
+    @Override
+    public boolean isEmpty() {
+        boolean flag;
+        Currency currency = currencyDao.getAnyCurrency();
+        flag = currency == null;
+        return flag;
+    }
+
+    @Override
     public void writingToTheDatabase(JSONObject jsonObject) {
 //        currencyDao.deleteCurrency();
 //        currencyDao.deleteDate();

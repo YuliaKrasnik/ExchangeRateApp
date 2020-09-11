@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">ExchangeRateApp</string>
-    <string name="text_previous_value">Предыдущее значение:</string>
 </resources>
