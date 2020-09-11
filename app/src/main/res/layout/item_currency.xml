@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/containerItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground">
+
+    <TextView
+        android:id="@+id/charCodeCurrency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nameCurrency"
+        app:layout_constraintEnd_toStartOf="@+id/valueCurrency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameCurrency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textColor="@color/mainTextColor"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/charCodeCurrency"
+        app:layout_constraintEnd_toStartOf="@+id/previousValueCurrency"/>
+
+    <TextView
+        android:id="@+id/valueCurrency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp"
+        android:gravity="end"
+        app:layout_constraintBottom_toTopOf="@+id/previousValueCurrency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/charCodeCurrency"/>
+
+    <TextView
+        android:id="@+id/previousValueCurrency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:text="@string/text_previous_value"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="12sp"
+        android:gravity="end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/valueCurrency"
+        app:layout_constraintStart_toEndOf="@+id/nameCurrency"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
