@@ -8,7 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.android.test.task.exchangerateapp.R;
+import com.android.test.task.exchangerateapp.repository.CurrencyRepository;
+import com.android.test.task.exchangerateapp.repository.db.CacheCurrencyDataSource;
+import com.android.test.task.exchangerateapp.repository.db.ICurrencyDataSource;
 import com.android.test.task.exchangerateapp.useCase.common.UseCaseExecutor;
+import com.android.test.task.exchangerateapp.useCase.currency.ObtainCurrencyUseCase;
 
 public class ListActivity extends AppCompatActivity {
     IListModuleContract.IListView view;
@@ -30,8 +34,12 @@ public class ListActivity extends AppCompatActivity {
         }
         view = (IListModuleContract.IListView) fragment;
 
+
+        final ICurrencyDataSource currencyDataSource = new CacheCurrencyDataSource();
+        final CurrencyRepository currencyRepository = new CurrencyRepository(currencyDataSource);
         final UseCaseExecutor useCaseExecutor = UseCaseExecutor.getInstance();
-        final IListModuleContract.IListPresenter presenter = new ListPresenter(view, useCaseExecutor);
+        final ObtainCurrencyUseCase obtainCurrencyUseCase = new ObtainCurrencyUseCase(currencyRepository);
+        final IListModuleContract.IListPresenter presenter = new ListPresenter(view, useCaseExecutor, obtainCurrencyUseCase);
 
     }
 }
