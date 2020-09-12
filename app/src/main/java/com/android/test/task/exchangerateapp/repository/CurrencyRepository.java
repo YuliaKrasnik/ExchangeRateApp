@@ -45,4 +45,9 @@ public class CurrencyRepository implements ICurrencyDataSource {
     public void writingToTheDatabase(JSONObject jsonObject) {
         currencyDataSource.writingToTheDatabase(jsonObject);
     }
+
+    @Override
+    public void refreshCurrency(IObtainCurrencyCallback callback) {
+
+    }
 }

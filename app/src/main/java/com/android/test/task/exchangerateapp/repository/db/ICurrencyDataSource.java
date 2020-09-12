@@ -13,6 +13,8 @@ public interface ICurrencyDataSource {
 
     void writingToTheDatabase(JSONObject jsonObject);
 
+    void refreshCurrency(final IObtainCurrencyCallback callback);
+
     interface IObtainCurrencyCallback {
         void didObtain(final List<Currency> currencies);
 

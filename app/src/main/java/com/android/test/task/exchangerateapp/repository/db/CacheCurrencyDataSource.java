@@ -61,4 +61,9 @@ public class CacheCurrencyDataSource implements ICurrencyDataSource {
         }
 
     }
+
+    @Override
+    public void refreshCurrency(IObtainCurrencyCallback callback) {
+
+    }
 }
