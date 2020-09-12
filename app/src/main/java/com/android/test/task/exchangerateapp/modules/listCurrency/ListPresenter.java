@@ -24,6 +24,11 @@ public class ListPresenter implements IListModuleContract.IListPresenter {
         obtainCurrency();
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
+
     private void obtainCurrency() {
         final ObtainCurrencyUseCase.RequestValues requestValues = new ObtainCurrencyUseCase.RequestValues();
         useCaseExecutor.execute(obtainCurrencyUseCase, requestValues, new UseCase.IUseCaseCallback<ObtainCurrencyUseCase.ResponseValues>() {

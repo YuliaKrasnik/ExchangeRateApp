@@ -25,7 +25,7 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
     private ListAdapter adapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private boolean isFirstInitialized = true;
 
@@ -50,7 +50,20 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
         }
         recyclerView.addItemDecoration(itemDecoration);
 
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
         return view;
+    }
+
+    private void refresh() {
+        setRefreshing(true);
+        presenter.onRefresh();
     }
 
     @Override
@@ -66,5 +79,10 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
     public void showCurrencies(List<Currency> currencies) {
         adapter = new ListAdapter(currencies);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void setRefreshing(boolean flag) {
+        swipeRefreshLayout.setRefreshing(flag);
     }
 }
