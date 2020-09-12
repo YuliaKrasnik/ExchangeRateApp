@@ -30,4 +30,7 @@ public interface ICurrencyDao {
 
     @Query("SELECT * FROM Currency")
     List<Currency> getCurrency();
+
+    @Query("SELECT date FROM UpdateDate")
+    String getUpdateDate();
 }

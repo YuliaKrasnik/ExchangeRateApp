@@ -10,10 +10,14 @@ public interface IListModuleContract {
     interface IListView extends IBaseView<IListPresenter> {
 
         void showCurrencies(List<Currency> currencies);
+
+        void setRefreshing(boolean flag);
     }
 
     interface IListPresenter extends IBasePresenter {
 
         void onResume();
+
+        void onRefresh();
     }
 }

@@ -29,7 +29,6 @@ public class CurrencyRepository implements ICurrencyDataSource {
                 @Override
                 public void didFailLoad(String message) {
                     Log.e("LOAD_CURRENCY", message);
-
                 }
             });
         }
@@ -44,5 +43,36 @@ public class CurrencyRepository implements ICurrencyDataSource {
     @Override
     public void writingToTheDatabase(JSONObject jsonObject) {
         currencyDataSource.writingToTheDatabase(jsonObject);
+    }
+
+    @Override
+    public void refreshCurrency(IObtainCurrencyCallback callback) {
+        ILoadData loadData = new LoaderCurrency();
+        loadData.loadData(new ILoadData.ILoadDataCallback() {
+            @Override
+            public void didLoad(JSONObject jsonObject) {
+                if (!compareUpdateDates(jsonObject)) {
+                    deleteDataFromDb();
+                    writingToTheDatabase(jsonObject);
+                    currencyDataSource.refreshCurrency(callback);
+                }
+                callback.didObtain(null);
+            }
+
+            @Override
+            public void didFailLoad(String message) {
+                Log.e("LOAD_CURRENCY", message);
+            }
+        });
+    }
+
+    @Override
+    public boolean compareUpdateDates(JSONObject jsonObject) {
+        return currencyDataSource.compareUpdateDates(jsonObject);
+    }
+
+    @Override
+    public void deleteDataFromDb() {
+        currencyDataSource.deleteDataFromDb();
     }
 }

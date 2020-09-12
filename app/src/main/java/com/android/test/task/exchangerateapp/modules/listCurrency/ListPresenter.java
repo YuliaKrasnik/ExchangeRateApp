@@ -4,6 +4,7 @@ import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 import com.android.test.task.exchangerateapp.useCase.common.UseCase;
 import com.android.test.task.exchangerateapp.useCase.common.UseCaseExecutor;
 import com.android.test.task.exchangerateapp.useCase.currency.ObtainCurrencyUseCase;
+import com.android.test.task.exchangerateapp.useCase.currency.RefreshCurrencyUseCase;
 
 import java.util.List;
 
@@ -11,17 +12,43 @@ public class ListPresenter implements IListModuleContract.IListPresenter {
     private final IListModuleContract.IListView view;
     private final UseCaseExecutor useCaseExecutor;
     private final ObtainCurrencyUseCase obtainCurrencyUseCase;
+    private final RefreshCurrencyUseCase refreshCurrencyUseCase;
 
-    public ListPresenter(IListModuleContract.IListView view, UseCaseExecutor useCaseExecutor, ObtainCurrencyUseCase obtainCurrencyUseCase) {
+    public ListPresenter(IListModuleContract.IListView view, UseCaseExecutor useCaseExecutor, ObtainCurrencyUseCase obtainCurrencyUseCase, RefreshCurrencyUseCase refreshCurrencyUseCase) {
         this.view = view;
         this.useCaseExecutor = useCaseExecutor;
         this.obtainCurrencyUseCase = obtainCurrencyUseCase;
+        this.refreshCurrencyUseCase = refreshCurrencyUseCase;
         view.setPresenter(this);
     }
 
     @Override
     public void onResume() {
         obtainCurrency();
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshCurrency();
+    }
+
+    private void refreshCurrency() {
+        final RefreshCurrencyUseCase.RequestValues requestValues = new RefreshCurrencyUseCase.RequestValues();
+        useCaseExecutor.execute(refreshCurrencyUseCase, requestValues, new UseCase.IUseCaseCallback<RefreshCurrencyUseCase.ResponseValues>() {
+            @Override
+            public void onSuccess(RefreshCurrencyUseCase.ResponseValues response) {
+                final List<Currency> currencies = response.getCurrencyList();
+                if (currencies != null) {
+                    view.showCurrencies(currencies);
+                }
+                view.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+
+            }
+        });
     }
 
     private void obtainCurrency() {
