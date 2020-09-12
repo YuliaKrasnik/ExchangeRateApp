@@ -19,13 +19,13 @@ import com.android.test.task.exchangerateapp.R;
 import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ListFragment extends Fragment implements IListModuleContract.IListView {
     private IListModuleContract.IListPresenter presenter;
     private ListAdapter adapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+
 
     private boolean isFirstInitialized = true;
 
@@ -42,7 +42,6 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
         recyclerView = view.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-    //    recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         Drawable divider = ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.divider);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);

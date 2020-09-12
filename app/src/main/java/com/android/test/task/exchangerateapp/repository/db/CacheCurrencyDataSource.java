@@ -18,6 +18,8 @@ public class CacheCurrencyDataSource implements ICurrencyDataSource {
 
     @Override
     public void obtainCurrency(IObtainCurrencyCallback callback) {
+   //     currencyDao.deleteCurrency();
+   //     currencyDao.deleteDate();
         currencyList = currencyDao.getCurrency();
         callback.didObtain(currencyList);
     }
@@ -32,8 +34,6 @@ public class CacheCurrencyDataSource implements ICurrencyDataSource {
 
     @Override
     public void writingToTheDatabase(JSONObject jsonObject) {
-//        currencyDao.deleteCurrency();
-//        currencyDao.deleteDate();
         try {
             UpdateDate updateDate = new UpdateDate();
             updateDate.date = jsonObject.getString("Date");
