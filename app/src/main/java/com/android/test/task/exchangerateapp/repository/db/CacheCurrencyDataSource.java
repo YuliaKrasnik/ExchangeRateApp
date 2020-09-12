@@ -7,21 +7,21 @@ import com.android.test.task.exchangerateapp.model.modelDb.UpdateDate;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class CacheCurrencyDataSource implements ICurrencyDataSource {
     private AppDatabase db = App.getInstance().getDatabase();
     private ICurrencyDao currencyDao = db.currencyDao();
-    private List<Currency> currencyList = new ArrayList<>();
 
     @Override
     public void obtainCurrency(IObtainCurrencyCallback callback) {
-   //     currencyDao.deleteCurrency();
-   //     currencyDao.deleteDate();
-        currencyList = currencyDao.getCurrency();
-        callback.didObtain(currencyList);
+        callback.didObtain(getCurrencyListFromDb());
     }
 
     @Override
@@ -64,6 +64,40 @@ public class CacheCurrencyDataSource implements ICurrencyDataSource {
 
     @Override
     public void refreshCurrency(IObtainCurrencyCallback callback) {
+        callback.didObtain(getCurrencyListFromDb());
+    }
 
+    private List<Currency> getCurrencyListFromDb() {
+        return currencyDao.getCurrency();
+    }
+
+    @Override
+    public boolean compareUpdateDates(JSONObject jsonObject) {
+        String newDate = null;
+        try {
+            newDate = jsonObject.getString("Date");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String oldDate = currencyDao.getUpdateDate();
+
+        return newDate == null || getDateFromString(newDate).getTime() == getDateFromString(oldDate).getTime();
+    }
+
+    @Override
+    public void deleteDataFromDb() {
+        currencyDao.deleteCurrency();
+        currencyDao.deleteDate();
+    }
+
+    private Date getDateFromString(String dateStr) {
+        Date formattedDate = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+            formattedDate = formatter.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return formattedDate;
     }
 }

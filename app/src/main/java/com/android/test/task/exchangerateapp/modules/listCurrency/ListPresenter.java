@@ -37,7 +37,11 @@ public class ListPresenter implements IListModuleContract.IListPresenter {
         useCaseExecutor.execute(refreshCurrencyUseCase, requestValues, new UseCase.IUseCaseCallback<RefreshCurrencyUseCase.ResponseValues>() {
             @Override
             public void onSuccess(RefreshCurrencyUseCase.ResponseValues response) {
-
+                final List<Currency> currencies = response.getCurrencyList();
+                if (currencies != null) {
+                    view.showCurrencies(currencies);
+                }
+                view.setRefreshing(false);
             }
 
             @Override
