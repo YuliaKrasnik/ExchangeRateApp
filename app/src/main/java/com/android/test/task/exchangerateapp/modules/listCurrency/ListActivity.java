@@ -13,6 +13,7 @@ import com.android.test.task.exchangerateapp.repository.db.CacheCurrencyDataSour
 import com.android.test.task.exchangerateapp.repository.db.ICurrencyDataSource;
 import com.android.test.task.exchangerateapp.useCase.common.UseCaseExecutor;
 import com.android.test.task.exchangerateapp.useCase.currency.ObtainCurrencyUseCase;
+import com.android.test.task.exchangerateapp.useCase.currency.RefreshCurrencyUseCase;
 
 public class ListActivity extends AppCompatActivity {
     IListModuleContract.IListView view;
@@ -39,7 +40,8 @@ public class ListActivity extends AppCompatActivity {
         final CurrencyRepository currencyRepository = new CurrencyRepository(currencyDataSource);
         final UseCaseExecutor useCaseExecutor = UseCaseExecutor.getInstance();
         final ObtainCurrencyUseCase obtainCurrencyUseCase = new ObtainCurrencyUseCase(currencyRepository);
-        final IListModuleContract.IListPresenter presenter = new ListPresenter(view, useCaseExecutor, obtainCurrencyUseCase);
+        final RefreshCurrencyUseCase refreshCurrencyUseCase = new RefreshCurrencyUseCase(currencyRepository);
+        final IListModuleContract.IListPresenter presenter = new ListPresenter(view, useCaseExecutor, obtainCurrencyUseCase, refreshCurrencyUseCase);
 
     }
 }
