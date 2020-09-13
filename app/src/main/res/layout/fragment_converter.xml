@@ -23,7 +23,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/initialNameCurrency"
         app:layout_constraintEnd_toStartOf="@+id/btnConverter"
-        android:textSize="@dimen/size_small_text"/>
+        android:textSize="@dimen/size_small_text"
+        android:inputType="number"/>
 
     <ImageButton
         android:id="@+id/btnConverter"
@@ -44,7 +45,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnConverter"
         app:layout_constraintBottom_toTopOf="@+id/countedValue"
-        android:textSize="@dimen/size_big_text"/>
+        android:textSize="@dimen/size_big_text"
+        android:text="Выберите валюту"/>
 
     <TextView
         android:id="@+id/countedValue"
