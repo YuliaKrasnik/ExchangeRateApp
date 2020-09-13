@@ -15,6 +15,7 @@ public interface IConverterModuleContract {
 
         void setNameCurrency(String name);
 
+        void setInitialValue(String value);
     }
 
     interface IConverterPresenter extends IBasePresenter {
