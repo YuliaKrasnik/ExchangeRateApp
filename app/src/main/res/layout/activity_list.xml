@@ -7,4 +7,9 @@
     tools:context=".modules.listCurrency.ListActivity"
     android:background="@color/colorBackground">
 
+    <fragment
+        android:id="@+id/converterFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </FrameLayout>
