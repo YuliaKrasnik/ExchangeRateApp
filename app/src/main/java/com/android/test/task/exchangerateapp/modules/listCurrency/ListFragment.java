@@ -1,5 +1,6 @@
 package com.android.test.task.exchangerateapp.modules.listCurrency;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,14 +21,32 @@ import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 
 import java.util.List;
 
-public class ListFragment extends Fragment implements IListModuleContract.IListView {
+public class ListFragment extends Fragment implements IListModuleContract.IListView, IListClickListener {
     private IListModuleContract.IListPresenter presenter;
     private ListAdapter adapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private OnFragmentInteractionListener onFragmentInteractionListener;
 
     private boolean isFirstInitialized = true;
+
+    @Override
+    public void onItemClicked(Currency currency) {
+        onFragmentInteractionListener.onItemSelected(currency);
+    }
+
+    interface OnFragmentInteractionListener {
+        void onItemSelected(Currency currency);
+
+        void onSwipeRefresh();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        onFragmentInteractionListener = (OnFragmentInteractionListener) context;
+    }
 
     @Override
     public void setPresenter(IListModuleContract.IListPresenter presenter) {
@@ -63,6 +82,7 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
 
     private void refresh() {
         setRefreshing(true);
+        onFragmentInteractionListener.onSwipeRefresh();
         presenter.onRefresh();
     }
 
@@ -77,7 +97,7 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
 
     @Override
     public void showCurrencies(List<Currency> currencies) {
-        adapter = new ListAdapter(currencies);
+        adapter = new ListAdapter(currencies, this);
         recyclerView.setAdapter(adapter);
     }
 
