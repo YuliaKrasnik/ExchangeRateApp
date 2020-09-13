@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.android.test.task.exchangerateapp.R;
+import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 import com.android.test.task.exchangerateapp.repository.CurrencyRepository;
 import com.android.test.task.exchangerateapp.repository.db.CacheCurrencyDataSource;
 import com.android.test.task.exchangerateapp.repository.db.ICurrencyDataSource;
@@ -15,9 +16,12 @@ import com.android.test.task.exchangerateapp.useCase.common.UseCaseExecutor;
 import com.android.test.task.exchangerateapp.useCase.currency.ObtainCurrencyUseCase;
 import com.android.test.task.exchangerateapp.useCase.currency.RefreshCurrencyUseCase;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements ListFragment.OnFragmentInteractionListener {
     IListModuleContract.IListView view;
+    IConverterModuleContract.IConverterView converterView;
     Fragment fragment;
+    ConverterFragment converterFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,5 +47,18 @@ public class ListActivity extends AppCompatActivity {
         final RefreshCurrencyUseCase refreshCurrencyUseCase = new RefreshCurrencyUseCase(currencyRepository);
         final IListModuleContract.IListPresenter presenter = new ListPresenter(view, useCaseExecutor, obtainCurrencyUseCase, refreshCurrencyUseCase);
 
+        converterFragment = (ConverterFragment) getSupportFragmentManager().findFragmentById(R.id.converterFragment);
+        converterView = converterFragment;
+        final IConverterModuleContract.IConverterPresenter converterPresenter = new ConverterPresenter(converterView);
+    }
+
+    @Override
+    public void onItemSelected(Currency currency) {
+        converterView.onItemSelected(currency);
+    }
+
+    @Override
+    public void onSwipeRefresh() {
+        converterView.onSwipeRefresh();
     }
 }
