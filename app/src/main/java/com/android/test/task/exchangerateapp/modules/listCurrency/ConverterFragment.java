@@ -37,7 +37,23 @@ public class ConverterFragment extends Fragment implements IConverterModuleContr
                 presenter.onClick(initialValue.getText().toString());
             }
         });
+
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState = presenter.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            presenter.recoverData(savedInstanceState);
+            presenter.addInfoAboutCurrency(initialValue.getText().toString());
+        }
+        super.onViewStateRestored(savedInstanceState);
     }
 
     @Override

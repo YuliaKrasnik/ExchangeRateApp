@@ -1,5 +1,7 @@
 package com.android.test.task.exchangerateapp.modules.listCurrency;
 
+import android.os.Bundle;
+
 import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 
 import java.util.Locale;
@@ -20,10 +22,10 @@ public class ConverterPresenter implements IConverterModuleContract.IConverterPr
     @Override
     public void onItemSelected(Currency currency) {
         saveCurrency(currency);
-        setValueInFields(currency.charCode, "", "");
+        setValueInAllFields(currency.charCode, "", "");
     }
 
-    private void setValueInFields(String nameCurrency, String initialValue, String countedValue) {
+    private void setValueInAllFields(String nameCurrency, String initialValue, String countedValue) {
         view.setNameCurrency(nameCurrency);
         view.setInitialValue(initialValue);
         view.setCountedValue(countedValue);
@@ -31,15 +33,40 @@ public class ConverterPresenter implements IConverterModuleContract.IConverterPr
 
     @Override
     public void onSwipeRefresh() {
-        setValueInFields("Выберите валюту", "", "");
+        setValueInAllFields("Выберите валюту", "", "");
     }
 
     @Override
     public void onClick(String valueEditText) {
         if (!valueEditText.equals("") && currency!=null) {
-            long rublesCount = Long.parseLong(valueEditText);
-            double converterValue = rublesCount / Double.parseDouble(currency.value);
-            view.setCountedValue(String.format(Locale.getDefault(), "%.4f", converterValue));
+            view.setCountedValue(String.format(Locale.getDefault(), "%.4f",  countConverterValue(valueEditText)));
         }
+    }
+
+    private double countConverterValue(String valueEditText) {
+        long rublesCount = Long.parseLong(valueEditText);
+        return rublesCount / Double.parseDouble(currency.value);
+    }
+
+    @Override
+    public Bundle onSaveInstanceState(Bundle outState) {
+        if (currency!= null) {
+            outState.putString("charCode", currency.charCode);
+            outState.putString("value", currency.value);
+        }
+        return outState;
+    }
+
+    @Override
+    public void recoverData(Bundle savedInstanceState) {
+        currency = new Currency();
+        currency.charCode = savedInstanceState.getString("charCode");
+        currency.value = savedInstanceState.getString("value");
+    }
+
+    @Override
+    public void addInfoAboutCurrency(String valueEditText) {
+        view.setNameCurrency(currency.charCode);
+        view.setCountedValue(String.format(Locale.getDefault(), "%.4f",  countConverterValue(valueEditText)));
     }
 }

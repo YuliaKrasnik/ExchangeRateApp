@@ -1,5 +1,7 @@
 package com.android.test.task.exchangerateapp.modules.listCurrency;
 
+import android.os.Bundle;
+
 import com.android.test.task.exchangerateapp.model.modelDb.Currency;
 import com.android.test.task.exchangerateapp.modules.common.IBasePresenter;
 import com.android.test.task.exchangerateapp.modules.common.IBaseView;
@@ -24,5 +26,11 @@ public interface IConverterModuleContract {
         void onSwipeRefresh();
 
         void onClick(String valueEditText);
+
+        Bundle onSaveInstanceState(Bundle outState);
+
+        void recoverData(Bundle savedInstanceState);
+
+        void addInfoAboutCurrency(String valueEditText);
     }
 }
