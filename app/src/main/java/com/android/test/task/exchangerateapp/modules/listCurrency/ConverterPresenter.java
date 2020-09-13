@@ -36,7 +36,7 @@ public class ConverterPresenter implements IConverterModuleContract.IConverterPr
 
     @Override
     public void onClick(String valueEditText) {
-        if (!valueEditText.equals("")) {
+        if (!valueEditText.equals("") && currency!=null) {
             long rublesCount = Long.parseLong(valueEditText);
             double converterValue = rublesCount / Double.parseDouble(currency.value);
             view.setCountedValue(String.format(Locale.getDefault(), "%.4f", converterValue));
