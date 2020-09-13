@@ -20,8 +20,6 @@ public class ConverterFragment extends Fragment implements IConverterModuleContr
     private EditText initialValue;
     private TextView selectedNameCurrency;
     private TextView countedValue;
-    private ImageButton btnConverter;
-    private Currency currency;
 
     @Nullable
     @Override
@@ -31,12 +29,12 @@ public class ConverterFragment extends Fragment implements IConverterModuleContr
         initialValue = view.findViewById(R.id.initialValue);
         selectedNameCurrency = view.findViewById(R.id.selectedNameCurrency);
         countedValue = view.findViewById(R.id.countedValue);
-        btnConverter = view.findViewById(R.id.btnConverter);
+        ImageButton btnConverter = view.findViewById(R.id.btnConverter);
 
         btnConverter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                presenter.onClick(initialValue.getText().toString());
             }
         });
         return view;
@@ -46,4 +44,30 @@ public class ConverterFragment extends Fragment implements IConverterModuleContr
     public void setPresenter(IConverterModuleContract.IConverterPresenter presenter) {
         this.presenter = presenter;
     }
+
+    @Override
+    public void onItemSelected(Currency currency) {
+        presenter.onItemSelected(currency);
+    }
+
+    @Override
+    public void onSwipeRefresh() {
+        presenter.onSwipeRefresh();
+    }
+
+    @Override
+    public void setCountedValue(String value) {
+        countedValue.setText(value);
+    }
+
+    @Override
+    public void setNameCurrency(String name) {
+        selectedNameCurrency.setText(name);
+    }
+
+    @Override
+    public void setInitialValue(String value) {
+        initialValue.setText(value);
+    }
+
 }
