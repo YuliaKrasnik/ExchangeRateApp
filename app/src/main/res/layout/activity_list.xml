@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/converterFragment"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="100dp"
         android:name="com.android.test.task.exchangerateapp.modules.listCurrency.ConverterFragment"/>
 
     <FrameLayout
