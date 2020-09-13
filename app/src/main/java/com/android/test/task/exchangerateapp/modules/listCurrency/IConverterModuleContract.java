@@ -29,8 +29,6 @@ public interface IConverterModuleContract {
 
         Bundle onSaveInstanceState(Bundle outState);
 
-        void recoverData(Bundle savedInstanceState);
-
-        void addInfoAboutCurrency(String valueEditText);
+        void onViewStateRestored(Bundle savedInstanceState, String initialValue);
     }
 }

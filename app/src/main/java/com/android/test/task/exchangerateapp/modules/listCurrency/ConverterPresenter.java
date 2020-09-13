@@ -33,13 +33,14 @@ public class ConverterPresenter implements IConverterModuleContract.IConverterPr
 
     @Override
     public void onSwipeRefresh() {
+        currency = null;
         setValueInAllFields("Выберите валюту", "", "");
     }
 
     @Override
     public void onClick(String valueEditText) {
-        if (!valueEditText.equals("") && currency!=null) {
-            view.setCountedValue(String.format(Locale.getDefault(), "%.4f",  countConverterValue(valueEditText)));
+        if (!valueEditText.equals("") && currency != null) {
+            view.setCountedValue(String.format(Locale.getDefault(), "%.4f", countConverterValue(valueEditText)));
         }
     }
 
@@ -50,7 +51,7 @@ public class ConverterPresenter implements IConverterModuleContract.IConverterPr
 
     @Override
     public Bundle onSaveInstanceState(Bundle outState) {
-        if (currency!= null) {
+        if (currency != null) {
             outState.putString("charCode", currency.charCode);
             outState.putString("value", currency.value);
         }
@@ -58,15 +59,32 @@ public class ConverterPresenter implements IConverterModuleContract.IConverterPr
     }
 
     @Override
-    public void recoverData(Bundle savedInstanceState) {
-        currency = new Currency();
-        currency.charCode = savedInstanceState.getString("charCode");
-        currency.value = savedInstanceState.getString("value");
+    public void onViewStateRestored(Bundle savedInstanceState, String initialValue) {
+        recoverDataFromBundle(savedInstanceState);
+        addInfoAboutCurrencyInView(initialValue);
     }
 
-    @Override
-    public void addInfoAboutCurrency(String valueEditText) {
-        view.setNameCurrency(currency.charCode);
-        view.setCountedValue(String.format(Locale.getDefault(), "%.4f",  countConverterValue(valueEditText)));
+
+    private void recoverDataFromBundle(Bundle savedInstanceState) {
+        String charCode = savedInstanceState.getString("charCode");
+        String value = savedInstanceState.getString("value");
+
+        if (charCode != null && value != null) {
+            currency = new Currency();
+            currency.charCode = charCode;
+            currency.value = value;
+        }
+    }
+
+    private void addInfoAboutCurrencyInView(String valueEditText) {
+        if (currency == null) {
+            view.setNameCurrency("Выберите валюту");
+        } else {
+            view.setNameCurrency(currency.charCode);
+        }
+
+        if (!valueEditText.equals("") && currency != null) {
+            view.setCountedValue(String.format(Locale.getDefault(), "%.4f", countConverterValue(valueEditText)));
+        }
     }
 }

@@ -50,8 +50,7 @@ public class ConverterFragment extends Fragment implements IConverterModuleContr
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            presenter.recoverData(savedInstanceState);
-            presenter.addInfoAboutCurrency(initialValue.getText().toString());
+            presenter.onViewStateRestored(savedInstanceState, initialValue.getText().toString());
         }
         super.onViewStateRestored(savedInstanceState);
     }
