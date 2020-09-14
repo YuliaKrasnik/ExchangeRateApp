@@ -31,12 +31,7 @@ public class ConverterFragment extends Fragment implements IConverterModuleContr
         countedValue = view.findViewById(R.id.countedValue);
         ImageButton btnConverter = view.findViewById(R.id.btnConverter);
 
-        btnConverter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onClick(initialValue.getText().toString());
-            }
-        });
+        btnConverter.setOnClickListener(v -> presenter.onClick(initialValue.getText().toString()));
 
         return view;
     }

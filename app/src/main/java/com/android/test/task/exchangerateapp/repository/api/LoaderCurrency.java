@@ -1,7 +1,5 @@
 package com.android.test.task.exchangerateapp.repository.api;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import org.json.JSONException;

@@ -27,13 +27,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
         final ListViewHolder listViewHolder = new ListViewHolder(view);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int position = listViewHolder.getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    iListClickListener.onItemClicked(getCurrencyList().get(position));
-                }
+        view.setOnClickListener(v -> {
+            final int position = listViewHolder.getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                iListClickListener.onItemClicked(getCurrencyList().get(position));
             }
         });
         return listViewHolder;

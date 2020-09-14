@@ -5,10 +5,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.test.task.exchangerateapp.R;
 import com.android.test.task.exchangerateapp.model.modelDb.Currency;
+import com.android.test.task.exchangerateapp.receiver.AlarmReceiver;
 import com.android.test.task.exchangerateapp.repository.CurrencyRepository;
 import com.android.test.task.exchangerateapp.repository.db.CacheCurrencyDataSource;
 import com.android.test.task.exchangerateapp.repository.db.ICurrencyDataSource;
@@ -49,7 +53,21 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnFr
 
         converterFragment = (ConverterFragment) getSupportFragmentManager().findFragmentById(R.id.converterFragment);
         converterView = converterFragment;
-        final IConverterModuleContract.IConverterPresenter converterPresenter = new ConverterPresenter(converterView);
+
+        if (converterView != null) {
+            final IConverterModuleContract.IConverterPresenter converterPresenter = new ConverterPresenter(converterView);
+        }
+
+        restartPeriodicLoad();
+
+    }
+
+    private void restartPeriodicLoad() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + AlarmManager.INTERVAL_DAY * 2, pendingIntent);
     }
 
     @Override
