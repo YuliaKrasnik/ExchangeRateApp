@@ -9,7 +9,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.android.test.task.exchangerateapp.R;
 import com.android.test.task.exchangerateapp.model.modelDb.Currency;
@@ -54,8 +53,11 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnFr
 
         converterFragment = (ConverterFragment) getSupportFragmentManager().findFragmentById(R.id.converterFragment);
         converterView = converterFragment;
-        final IConverterModuleContract.IConverterPresenter converterPresenter = new ConverterPresenter(converterView);
-        
+
+        if (converterView != null) {
+            final IConverterModuleContract.IConverterPresenter converterPresenter = new ConverterPresenter(converterView);
+        }
+
         restartPeriodicLoad();
 
     }

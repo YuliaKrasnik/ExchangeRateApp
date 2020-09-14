@@ -23,9 +23,7 @@ import java.util.List;
 
 public class ListFragment extends Fragment implements IListModuleContract.IListView, IListClickListener {
     private IListModuleContract.IListPresenter presenter;
-    private ListAdapter adapter;
     private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private OnFragmentInteractionListener onFragmentInteractionListener;
 
@@ -59,7 +57,7 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         Drawable divider = ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.divider);
@@ -70,12 +68,7 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
         recyclerView.addItemDecoration(itemDecoration);
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refresh();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::refresh);
 
         return view;
     }
@@ -97,7 +90,7 @@ public class ListFragment extends Fragment implements IListModuleContract.IListV
 
     @Override
     public void showCurrencies(List<Currency> currencies) {
-        adapter = new ListAdapter(currencies, this);
+        ListAdapter adapter = new ListAdapter(currencies, this);
         recyclerView.setAdapter(adapter);
     }
 
